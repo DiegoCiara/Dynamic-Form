@@ -49,11 +49,13 @@ function ModelEditModal({ open, setOpen, aditionals }) {
       overlayClassName="Modal__Overlay"
     >
       <MdClose className="closeModal" onClick={() => setOpen(!open)} />
-      <h2>
-        Atualização de Modelo
-      </h2>
-      <p>Adicione ou altere os dados do fomulário de cadastros</p>
       <form onSubmit={handleSubmit}>
+      <div className="form-header">
+        <h2>
+          Atualização de Modelo
+        </h2>
+        <p>Adicione ou altere os dados do fomulário de cadastros</p>
+      </div>
       <div className='input-container'>
           <div className='input-container new-items'>
             <label>

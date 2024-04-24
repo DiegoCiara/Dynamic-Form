@@ -17,7 +17,7 @@ function ModelsPage() {
       />
       <NavBar />
       <main>
-        <header>
+        <header style={{marginBottom: 20}}>
           <h1>
             Modelos
           </h1>
