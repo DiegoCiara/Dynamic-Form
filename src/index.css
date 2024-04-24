@@ -1,0 +1,163 @@
+:root {
+  font-family: Inter, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --background-color: #fafafa;
+  --text-color: #242424;
+  --gray: #d4d4d4;
+  --blue: #0033b4;
+  --blue-light: rgb(55, 107, 240);
+  --blue-transparent: #0047fc2d;
+  --blue-white: var(--blue);
+  --error: #fc0058;
+  --success: #02a36d;
+  --success-hover: #006f4a;
+  color-scheme: light dark;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: inherit;
+  transition: .5s;
+  cursor: pointer;
+}
+a:hover {
+  color: var(--blue-light);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: start;
+  min-width: 320px;
+  min-height: 100vh;
+  transition: 1s;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 4px;
+  align-items: center;
+  position: relative;
+}
+
+.new-items{
+  flex-direction: row;
+}
+
+.input-container > label {
+  width: 100%;
+  margin-left: 5px;
+  text-align: left;
+  font-size: 12px;
+}
+
+input{
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  outline: 1px solid var(--gray);
+  color: var(--dark);
+  width: 100%;
+  transition: .3s;  
+  box-sizing: border-box; 
+  font-weight:600;
+}
+
+select{
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  outline: 1px solid var(--gray);
+  color: var(--dark);
+  width: 100%;
+  transition: .3s;  
+  box-sizing: border-box; 
+  font-weight:600;
+}
+
+input:focus{
+  outline: 1px solid var(--blue);
+}
+select:disabled{
+  opacity: 60%;
+}
+
+
+input:disabled{
+  opacity: 60%;
+}
+
+body.dark {
+  --background-color: rgb(7, 9, 28);
+  --text-color: #fafafa;
+  --gray: #eeeeee1f;
+  --blue-white: var(--text-color);
+}
+
+h1 {
+  font-size: 2.5em;
+  /* line-height: 1.1; */
+  margin: 0;
+  margin-top: 20px;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
+button {
+  border-radius: 4px;
+  border: none;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 600;
+  background-color: var(--blue);
+  cursor: pointer;
+  transition: 0.25s;
+}
+button:hover {
+  background-color: var(--blue-light);
+}
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+main{
+  min-height: 80vh;
+}
+
+header{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-top: 20px;
+}
+
+section{
+  display: flex;
+  flex-flow: wrap;
+  min-height: 70vh;
+  gap: 10px;
+}

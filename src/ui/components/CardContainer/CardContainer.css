@@ -1,0 +1,22 @@
+.CardContainer{
+  background-color: var(--blue-transparent);
+  color: var(--blue-white);
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  height: 200px;
+  width: 200px;
+  border-radius: 20px;
+  font-size: 32px;
+  transition: .8s;
+}
+
+.CardContainer:hover{
+  background-color: #0025834b;
+}
+
+.CardContainer > h4{
+  margin-top: 10px;
+  margin: 0;
+  /* white-space: ; */
+}

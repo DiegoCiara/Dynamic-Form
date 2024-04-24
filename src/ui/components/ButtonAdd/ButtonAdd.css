@@ -1,0 +1,16 @@
+.button-add{
+  background-color: var(--blue-transparent);
+  color: var(--blue-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  width: 250px;
+  border-radius: 20px;
+  font-size: 32px;
+  transition: .8s;
+}
+
+.button-add:hover{
+  background-color: #0025834b;
+}
