@@ -30,6 +30,7 @@ const ModalContainer = ({ open, setOpen, children, ...params }) => {
       onRequestClose={setOpen}
       // style={customStyles}
       shouldCloseOnOverlayClick={false}
+      appElement={document.getElementById('root')}
       contentLabel="Modal"
       onAfterOpen={() => {
         document.body.style.overflow = 'hidden';

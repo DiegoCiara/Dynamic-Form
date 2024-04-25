@@ -3,24 +3,40 @@ import ModalContainer from "../..";
 import './ModelEditModal.css'
 import { useEffect, useState } from "react";
 import { FaInfo, FaInfoCircle, FaPlus, FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useModelPage } from "../../../../../services/ModelService";
 
+function ModelEditModal({ open, modelId, setModelId, setOpen, getModels }) {
+  const { updateModel, findModel } = useModelPage();
 
+  const [aditionalLabels, setAditionalLabels] = useState([]);
 
-
-function ModelEditModal({ open, setOpen, aditionals }) {
-  const [aditionalLabels, setAditionalLabels] = useState(aditionals || []);
+  const [ model, setModel ] = useState()
 
   const inputOptions = [
     { label: 'Texto', value: 'text' },
     { label: 'Data', value: 'date' },
   ];
 
+  async function getModel(){
+    try {
+      const response = await findModel(modelId)
+      console.log(response.data?.aditionals)
+      setModel(response.data)
+      setAditionalLabels(response.data?.aditionals)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault()
-    alert(aditionalLabels.map((e) => `${e.label}, ${e.type}`))
-    console.log(aditionalLabels)
     setAditionalLabels([])
     setOpen(!open);
+    updateModel(modelId, aditionalLabels)
+    setModel()
+    setModelId("")
+    getModels()
   };
   
   function handleLabelChange(e, index) {
@@ -41,6 +57,24 @@ function ModelEditModal({ open, setOpen, aditionals }) {
     setAditionalLabels(newAditionalLabels);
   };
 
+  function handleClose(){
+    setOpen(!open);
+    setModel();
+    setModelId("")
+    setAditionalLabels([])
+  }
+
+  useEffect(() => {
+    if(!model && modelId !== ""){
+      getModel()
+    }
+  },[modelId])
+
+  useEffect(() => {
+    setAditionalLabels(model?.aditionals)
+  },[model])
+  
+
   return (
     <ModalContainer
       open={open}
@@ -48,7 +82,7 @@ function ModelEditModal({ open, setOpen, aditionals }) {
       className="Modal__Content"
       overlayClassName="Modal__Overlay"
     >
-      <MdClose className="closeModal" onClick={() => setOpen(!open)} />
+      <MdClose className="closeModal" onClick={() => handleClose()} />
       <form onSubmit={handleSubmit}>
       <div className="form-header">
         <h2>
@@ -150,7 +184,7 @@ function ModelEditModal({ open, setOpen, aditionals }) {
         </div>
         {aditionalLabels?.map((e, index) => (
 
-          <div className='input-container'>
+          <div className='input-container' key={index}>
             <div className='input-container new-items'>
               <label>
                 Nome do campo
@@ -167,7 +201,7 @@ function ModelEditModal({ open, setOpen, aditionals }) {
               <input
                 required
                 type="text"
-                value={aditionalLabels[index]?.value}
+                value={aditionalLabels[index]?.label}
                 onChange={(e) => handleLabelChange(e, index)}
                 label="description"
                 placeholder="Nome do Campo"
@@ -185,8 +219,8 @@ function ModelEditModal({ open, setOpen, aditionals }) {
                 <option disabled>
                   Tipo de Campo
                 </option>
-                {inputOptions?.map((e) => (
-                  <option value={e?.value}>
+                {inputOptions?.map((e, index) => (
+                  <option value={e?.value} key={index}>
                     {e?.label}
                   </option>
                 ))}
@@ -199,7 +233,9 @@ function ModelEditModal({ open, setOpen, aditionals }) {
         ))}
         <div
           className="add-option"
-          onClick={() => setAditionalLabels([...aditionalLabels, { label: "", type: 'text' }])}>
+          onClick={() => {
+            setAditionalLabels([...aditionalLabels, { id: aditionalLabels?.length + 1, label: "", type: 'text', createdAt: new Date }]
+          )}}>
           <span>
             <FaPlus />
           </span>

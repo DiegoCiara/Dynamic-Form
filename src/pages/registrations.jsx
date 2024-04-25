@@ -1,12 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonAdd from "../ui/components/ButtonAdd/ButtonAdd";
 import NavBar from "../ui/components/NavBar/NavBar";
 import RegistrationCreateModal from "../ui/components/Modal/Registrations/RegistrationCreateModal/RegistrationCreateModal";
+import { useRegistrationPage } from "../services/RegistrationService";
+import FormCards from "../ui/components/FormsCards/FormCards";
 
 
 
 function RegistrationsPage() {
+  const { findRegistrations } = useRegistrationPage();
+
   const [ openModelModal, setOpenModelModal ] = useState(false)
+  const [ modelId, setModelId ]= useState("")
+  const [ registrations, setRegistrations ] = useState([])
+
+  async function getRegistrations(){
+    try {
+      const response = await findRegistrations()
+      setRegistrations(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getRegistrations()
+  },[])
 
   return (
     <>
@@ -24,8 +43,16 @@ function RegistrationsPage() {
             Cadastros de formulários que são cadastrados
           </p>
         </header>
-        <section>
           <ButtonAdd onClick={() => setOpenModelModal(true)}/>
+        <section>
+          {registrations?.map((e) => (
+            <FormCards
+              name={e?.name}
+              description={e?.description}
+              // item1={e?.aditionals[0]?.value}
+              // item2={e?.aditionals[1]?.value}
+            />
+          ))}
         </section>
       </main>
     </>

@@ -2,6 +2,7 @@ import { MdClose } from "react-icons/md";
 import ModalContainer from "../..";
 import './RegistrationCreateModal.css'
 import { useEffect, useState } from "react";
+import { useModelPage } from "../../../../../services/ModelService";
 
 
 
@@ -9,6 +10,7 @@ import { useEffect, useState } from "react";
 function RegistrationCreateModal({ open, setOpen }){
 
 
+  const { findModelByName } = useModelPage();
   const [ aditionalLabels, setAditionalLabels] = useState([])
   const [ data, setData ] = useState({
     name: '',
@@ -16,9 +18,20 @@ function RegistrationCreateModal({ open, setOpen }){
     aditional: aditionalLabels
   })
 
+  const typeForm = "Product"
+
+  async function getModelName(){
+    try {
+      const response = await findModelByName(typeForm)
+      setAditionalLabels(response.data)
+      console.log(response.data, 'Response')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   function handleSubmit(e){
     e.preventDefault()
-    alert(data.name)
   }
 
   function handleLabelChange(e, index) {
@@ -28,8 +41,11 @@ function RegistrationCreateModal({ open, setOpen }){
   }
 
   useEffect(() => {
-    console.log(data)
-  },[data])
+    if(open){
+      getModelName()
+      console.log("abrou")
+    }
+  },[open])
 
   return(
     <ModalContainer 
@@ -40,7 +56,7 @@ function RegistrationCreateModal({ open, setOpen }){
     >
       <MdClose className="closeModal" onClick={() => setOpen(!open)}/>
       <h2>
-        Novo Cadastro
+        Novo Cadastro {typeForm}
       </h2>
       <p>Insira os dados do novo cadastro de modelos</p>
       <form onSubmit={handleSubmit}>
@@ -74,7 +90,7 @@ function RegistrationCreateModal({ open, setOpen }){
           />
         </div>
 
-        {aditionalLabels.map((e, index) => (
+        {aditionalLabels?.map((e, index) => (
           
         <div className='input-container'>
             <label>
