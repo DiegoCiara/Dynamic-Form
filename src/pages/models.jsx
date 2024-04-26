@@ -22,7 +22,6 @@ function ModelsPage() {
       setModels(response.data)
     } catch (error) {
       console.log(error)
-      toast.error("Fodase")
     }
   }
 
